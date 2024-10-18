@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rick_and_morty_app/presentation/screens/splash_screen.dart';
+import 'package:rick_and_morty_app/presentation/theme/theme_provider.dart';
 
 void main() {
   runApp(
@@ -12,8 +14,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: SplashScreen(),
+    return ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: Builder(builder: (context) {
+        return MaterialApp(
+          theme: context.watch<ThemeProvider>().theme,
+          home: const SplashScreen(),
+        );
+      }),
     );
   }
 }

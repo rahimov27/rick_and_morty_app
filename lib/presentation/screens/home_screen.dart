@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rick_and_morty_app/presentation/screens/characters_page.dart';
+import 'package:rick_and_morty_app/presentation/screens/locations_page.dart';
 import 'package:rick_and_morty_app/presentation/theme/app_colors.dart';
 import 'package:rick_and_morty_app/resources/resources.dart';
 
@@ -16,9 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> screens = [
     const CharactersPage(),
-    const Scaffold(
-      body: Text("2"),
-    ),
+    const LocationsPage(),
     const Scaffold(
       body: Text("3"),
     ),

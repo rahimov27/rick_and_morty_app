@@ -132,29 +132,16 @@ class _CharactersPageState extends State<CharactersPage> {
                     if (state is CharsSuccess) {
                       return isGrid
                           ? Expanded(
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                           CharacterDetailsPage(
-                                          ),
-                                    ),
-                                  );
-                                },
-                                child: GridView.builder(
-                                  shrinkWrap: true,
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2,
-                                          childAspectRatio: 0.8),
-                                  itemCount: state.model.results?.length ?? 0,
-                                  itemBuilder: (context, index) =>
-                                      GridViewWidget(
-                                    characters: state.model.results?[index] ??
-                                        MyCharacters(),
-                                  ),
+                              child: GridView.builder(
+                                shrinkWrap: true,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        childAspectRatio: 0.8),
+                                itemCount: state.model.results?.length ?? 0,
+                                itemBuilder: (context, index) => GridViewWidget(
+                                  characters: state.model.results?[index] ??
+                                      MyCharacters(),
                                 ),
                               ),
                             )
@@ -163,6 +150,17 @@ class _CharactersPageState extends State<CharactersPage> {
                                 shrinkWrap: true,
                                 itemCount: state.model.results?.length ?? 0,
                                 itemBuilder: (context, index) => ListViewWidget(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            CharacterDetailsPage(
+                                          data: state.model.results![index],
+                                        ),
+                                      ),
+                                    );
+                                  },
                                   characters: state.model.results?[index] ??
                                       MyCharacters(),
                                 ),

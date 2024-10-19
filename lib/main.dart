@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
             ],
             child: MaterialApp(
               theme: context.watch<ThemeProvider>().theme,
-              home: const CharacterDetailsPage(),
+              home: const SplashScreen(),
             ),
           ),
         );

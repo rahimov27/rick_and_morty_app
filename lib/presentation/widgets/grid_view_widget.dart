@@ -3,9 +3,13 @@ import 'package:rick_and_morty_app/data/models/character_model.dart';
 import 'package:rick_and_morty_app/presentation/theme/app_colors.dart';
 
 class GridViewWidget extends StatelessWidget {
-  const GridViewWidget({super.key, required this.characters});
+  const GridViewWidget({
+    super.key,
+    required this.characters,
+  });
 
   final MyCharacters characters;
+  
 
   @override
   Widget build(BuildContext context) {

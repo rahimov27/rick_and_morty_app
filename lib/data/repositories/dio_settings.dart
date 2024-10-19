@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-class DioService {
+class DioSettings {
   final Dio _dio = Dio(BaseOptions(
     baseUrl: 'https://rickandmortyapi.com/api/', // Set your base URL
     contentType: "application/json",
@@ -11,7 +11,7 @@ class DioService {
     },
   ));
 
-  DioService() {
+  DioSettings() {
     // Add interceptors for logging or error handling
     _dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
@@ -29,8 +29,10 @@ class DioService {
     ));
   }
 
-  Future<Response> get(String path,
-      {Map<String, dynamic>? queryParameters}) async {
+  // Добавляем публичный геттер для доступа к Dio
+  Dio get dio => _dio;
+
+  Future<Response> get(String path, {Map<String, dynamic>? queryParameters}) async {
     try {
       final response = await _dio.get(path, queryParameters: queryParameters);
       return response;

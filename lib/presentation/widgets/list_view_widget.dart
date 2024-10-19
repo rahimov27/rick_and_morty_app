@@ -27,10 +27,15 @@ class ListViewWidget extends StatelessWidget {
             children: [
               Text(
                 characters.status ?? "",
-                style: const TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.green),
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w500,
+                  color: characters.status == "Alive"
+                      ? AppColors.green
+                      : characters.status == "unknown"
+                          ? AppColors.grey
+                          : AppColors.red,
+                ),
               ),
               Text(
                 characters.name ?? "",

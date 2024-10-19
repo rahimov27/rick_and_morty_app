@@ -11,7 +11,7 @@ class CharsBloc extends Bloc<CharsEvent, CharsState> {
     on<GetCharsList>(
       (event, emit) async {
         try {
-          final model = await repo.getData();
+          final model = await repo.getData(name: event.name);
           emit(
             CharsSuccess(model: model),
           );

@@ -45,6 +45,12 @@ class _CharactersPageState extends State<CharactersPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextField(
+                  onChanged: (value) {
+                    BlocProvider.of<CharsBloc>(context).add(
+                      GetCharsList(name: value),
+                    );
+                  },
+                  controller: controller,
                   decoration: InputDecoration(
                     fillColor: AppColors.darkTextEditionColor,
                     filled: true,
@@ -149,12 +155,31 @@ class _CharactersPageState extends State<CharactersPage> {
                               ),
                             );
                     } else if (state is CharsError) {
-                      return Text(state.errorText);
+                      return Center(
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              Pngs.notFound,
+                              width: MediaQuery.of(context).size.width * 0.50,
+                            ),
+                            const SizedBox(height: 10),
+                            const SizedBox(
+                              width: 200,
+                              child: Text(
+                                "Персонаж с таким именем не найден",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: AppColors.grey),
+                              ),
+                            )
+                          ],
+                        ),
+                      );
                     } else if (state is CharsLoading) {
                       return const Center(
                         child: CircularProgressIndicator(),
                       );
                     }
+
                     return const Center(
                       child: CircularProgressIndicator(
                         color: AppColors.green,

@@ -16,6 +16,7 @@ class ThemeProvider extends ChangeNotifier {
           backgroundColor:
               isDarkTheme ? AppColors.darkBgColor : AppColors.white,
         ));
+        
     notifyListeners();
   }
 }

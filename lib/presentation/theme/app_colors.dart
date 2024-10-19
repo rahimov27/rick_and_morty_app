@@ -8,4 +8,5 @@ abstract class AppColors {
   static const Color textField = Color((0xff5B6975));
   static const Color red = Color((0xffEB5757));
   static const Color blueGreen = Color((0xff22A2BDDE));
+  static const Color darkTextEditionColor = Color(0xff152A3A);
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:rick_and_morty_app/presentation/screens/characters_page.dart';
 import 'package:rick_and_morty_app/presentation/theme/app_colors.dart';
 import 'package:rick_and_morty_app/resources/resources.dart';
 
@@ -13,9 +14,23 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
 
+  List<Widget> screens = [
+    const CharactersPage(),
+    const Scaffold(
+      body: Text("2"),
+    ),
+    const Scaffold(
+      body: Text("3"),
+    ),
+    const Scaffold(
+      body: Text("4"),
+    )
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
           unselectedItemColor: AppColors.grey,
           selectedItemColor: AppColors.green,

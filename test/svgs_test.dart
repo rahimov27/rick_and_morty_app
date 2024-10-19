@@ -7,7 +7,9 @@ void main() {
   test('svgs assets test', () {
     expect(File(Svgs.search).existsSync(), isTrue);
     expect(File(Svgs.actions).existsSync(), isTrue);
+    expect(File(Svgs.character).existsSync(), isTrue);
     expect(File(Svgs.episode).existsSync(), isTrue);
+    expect(File(Svgs.filter).existsSync(), isTrue);
     expect(File(Svgs.grid).existsSync(), isTrue);
     expect(File(Svgs.list).existsSync(), isTrue);
     expect(File(Svgs.location).existsSync(), isTrue);

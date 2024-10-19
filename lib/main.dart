@@ -6,6 +6,7 @@ import 'package:rick_and_morty_app/data/repositories/get_chars_repo.dart';
 import 'package:rick_and_morty_app/data/repositories/get_location_repo.dart';
 import 'package:rick_and_morty_app/presentation/blocs/chars_bloc/chars_bloc.dart';
 import 'package:rick_and_morty_app/presentation/blocs/locations_bloc/location_bloc.dart';
+import 'package:rick_and_morty_app/presentation/screens/character_details_page.dart';
 import 'package:rick_and_morty_app/presentation/screens/splash_screen.dart';
 import 'package:rick_and_morty_app/presentation/theme/theme_provider.dart';
 
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
             ],
             child: MaterialApp(
               theme: context.watch<ThemeProvider>().theme,
-              home: const SplashScreen(),
+              home: const CharacterDetailsPage(),
             ),
           ),
         );

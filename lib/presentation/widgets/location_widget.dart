@@ -29,7 +29,9 @@ class LocationWidget extends StatelessWidget {
               height: 150,
               width: double.infinity,
               fit: BoxFit.cover,
-              location.url ?? "", // Убедитесь, что URL не пуст
+              location.url == null
+                  ? location.residents![0]
+                  : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg",
             ),
           ),
           Padding(

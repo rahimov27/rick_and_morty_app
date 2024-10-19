@@ -132,8 +132,16 @@ class _CharactersPageState extends State<CharactersPage> {
                       );
                     } else if (state is CharsError) {
                       return Text(state.errorText);
+                    } else if (state is CharsLoading) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
                     }
-                    return SizedBox();
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.green,
+                      ),
+                    );
                   },
                 )
               ],

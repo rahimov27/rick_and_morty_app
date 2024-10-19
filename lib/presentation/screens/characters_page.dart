@@ -1,11 +1,10 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rick_and_morty_app/data/models/character_model.dart';
 import 'package:rick_and_morty_app/presentation/blocs/chars_bloc/chars_bloc.dart';
 import 'package:rick_and_morty_app/presentation/theme/app_colors.dart';
+import 'package:rick_and_morty_app/presentation/widgets/grid_view_widget.dart';
 import 'package:rick_and_morty_app/presentation/widgets/list_view_widget.dart';
 import 'package:rick_and_morty_app/resources/resources.dart';
 
@@ -31,7 +30,9 @@ class _CharactersPageState extends State<CharactersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+      ),
       body: GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: () {
@@ -122,14 +123,31 @@ class _CharactersPageState extends State<CharactersPage> {
                 BlocBuilder<CharsBloc, CharsState>(
                   builder: (context, state) {
                     if (state is CharsSuccess) {
-                      return Expanded(
-                        child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: state.model.results?.length ?? 0,
-                            itemBuilder: (context, index) => ListViewWidget(
-                                characters: state.model.results?[index] ??
-                                    MyCharacters())),
-                      );
+                      return isGrid
+                          ? Expanded(
+                              child: GridView.builder(
+                                shrinkWrap: true,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        childAspectRatio: 0.8),
+                                itemCount: state.model.results?.length ?? 0,
+                                itemBuilder: (context, index) => GridViewWidget(
+                                  characters: state.model.results?[index] ??
+                                      MyCharacters(),
+                                ),
+                              ),
+                            )
+                          : Expanded(
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: state.model.results?.length ?? 0,
+                                itemBuilder: (context, index) => ListViewWidget(
+                                  characters: state.model.results?[index] ??
+                                      MyCharacters(),
+                                ),
+                              ),
+                            );
                     } else if (state is CharsError) {
                       return Text(state.errorText);
                     } else if (state is CharsLoading) {

@@ -1,21 +1,21 @@
-class LocationModel {
+class EpisodeModel {
   Info? info;
-  List<MyLocation>? results;
+  List<MyEpisode>? results;
 
-  LocationModel({this.info, this.results});
+  EpisodeModel({this.info, this.results});
 
-  LocationModel.fromJson(Map<String, dynamic> json) {
+  EpisodeModel.fromJson(Map<String, dynamic> json) {
     info = json['info'] != null ? Info.fromJson(json['info']) : null;
     if (json['results'] != null) {
-      results = <MyLocation>[];
+      results = <MyEpisode>[];
       json['results'].forEach((v) {
-        results!.add(MyLocation.fromJson(v));
+        results!.add(MyEpisode.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
+    final Map<String, dynamic> data = Map<String, dynamic>();
     if (info != null) {
       data['info'] = info!.toJson();
     }
@@ -42,7 +42,7 @@ class Info {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['count'] = count;
     data['pages'] = pages;
     data['next'] = next;
@@ -51,41 +51,41 @@ class Info {
   }
 }
 
-class MyLocation {
+class MyEpisode {
   int? id;
   String? name;
-  String? type;
-  String? dimension;
-  List<String>? residents;
+  String? airDate;
+  String? episode;
+  List<String>? characters;
   String? url;
   String? created;
 
-  MyLocation(
+  MyEpisode(
       {this.id,
       this.name,
-      this.type,
-      this.dimension,
-      this.residents,
+      this.airDate,
+      this.episode,
+      this.characters,
       this.url,
       this.created});
 
-  MyLocation.fromJson(Map<String, dynamic> json) {
+  MyEpisode.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    type = json['type'];
-    dimension = json['dimension'];
-    residents = json['residents'].cast<String>();
+    airDate = json['air_date'];
+    episode = json['episode'];
+    characters = json['characters'].cast<String>();
     url = json['url'];
     created = json['created'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['id'] = id;
     data['name'] = name;
-    data['type'] = type;
-    data['dimension'] = dimension;
-    data['residents'] = residents;
+    data['air_date'] = airDate;
+    data['episode'] = episode;
+    data['characters'] = characters;
     data['url'] = url;
     data['created'] = created;
     return data;

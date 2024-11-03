@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:rick_and_morty_app/resources/resources.dart';
+import 'package:rick_and_morty_app/shared/resources/resources.dart';
 
 void main() {
   test('svgs assets test', () {

@@ -1,93 +1,45 @@
 class EpisodeModel {
-  Info? info;
-  List<MyEpisode>? results;
+  final int id;
+  final String name;
+  final String airDate;
+  final String episode;
+  final List<String> characters;
+  final String url;
+  final String created;
 
-  EpisodeModel({this.info, this.results});
+  EpisodeModel({
+    required this.id,
+    required this.name,
+    required this.airDate,
+    required this.episode,
+    required this.characters,
+    required this.url,
+    required this.created,
+  });
 
-  EpisodeModel.fromJson(Map<String, dynamic> json) {
-    info = json['info'] != null ? Info.fromJson(json['info']) : null;
-    if (json['results'] != null) {
-      results = <MyEpisode>[];
-      json['results'].forEach((v) {
-        results!.add(MyEpisode.fromJson(v));
-      });
-    }
+  // Factory method to create an instance from JSON
+  factory EpisodeModel.fromJson(Map<String, dynamic> json) {
+    return EpisodeModel(
+      id: json['id'] as int,
+      name: json['name'] as String,
+      airDate: json['air_date'] as String,
+      episode: json['episode'] as String,
+      characters: List<String>.from(json['characters'] as List),
+      url: json['url'] as String,
+      created: json['created'] as String,
+    );
   }
 
+  // Method to convert an instance to JSON
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (info != null) {
-      data['info'] = info!.toJson();
-    }
-    if (results != null) {
-      data['results'] = results!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class Info {
-  int? count;
-  int? pages;
-  String? next;
-  Null prev;
-
-  Info({this.count, this.pages, this.next, this.prev});
-
-  Info.fromJson(Map<String, dynamic> json) {
-    count = json['count'];
-    pages = json['pages'];
-    next = json['next'];
-    prev = json['prev'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['count'] = count;
-    data['pages'] = pages;
-    data['next'] = next;
-    data['prev'] = prev;
-    return data;
-  }
-}
-
-class MyEpisode {
-  int? id;
-  String? name;
-  String? airDate;
-  String? episode;
-  List<String>? characters;
-  String? url;
-  String? created;
-
-  MyEpisode(
-      {this.id,
-      this.name,
-      this.airDate,
-      this.episode,
-      this.characters,
-      this.url,
-      this.created});
-
-  MyEpisode.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    airDate = json['air_date'];
-    episode = json['episode'];
-    characters = json['characters'].cast<String>();
-    url = json['url'];
-    created = json['created'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['name'] = name;
-    data['air_date'] = airDate;
-    data['episode'] = episode;
-    data['characters'] = characters;
-    data['url'] = url;
-    data['created'] = created;
-    return data;
+    return {
+      'id': id,
+      'name': name,
+      'air_date': airDate,
+      'episode': episode,
+      'characters': characters,
+      'url': url,
+      'created': created,
+    };
   }
 }

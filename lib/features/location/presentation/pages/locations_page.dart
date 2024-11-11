@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rick_and_morty_app/features/location/presentation/locations_bloc/location_bloc.dart';
+import 'package:rick_and_morty_app/features/location/presentation/bloc/location_bloc.dart';
 import 'package:rick_and_morty_app/features/location/presentation/widgets/location_widget.dart';
 
 class LocationsPage extends StatefulWidget {
@@ -32,15 +32,15 @@ class _LocationsPageState extends State<LocationsPage> {
             children: [
               BlocBuilder<LocationBloc, LocationState>(
                 builder: (context, state) {
-                  if (state is LocationSucess) {
+                  if (state is LocationSuccess) {
                     return Expanded(
                       child: ListView.builder(
-                        itemCount: state.model.results?.length ?? 0,
+                        itemCount: state.location.length,
                         itemBuilder: (context, index) {
-                          final location = state.model.results?[index];
+                          final location = state.location[index];
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 24),
-                            child: LocationWidget(location: location!),
+                            child: LocationWidget(location: location),
                           );
                         },
                       ),
@@ -54,7 +54,7 @@ class _LocationsPageState extends State<LocationsPage> {
                   }
                   return const SizedBox();
                 },
-              )
+              ),
             ],
           ),
         ),

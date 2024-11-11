@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick_and_morty_app/features/chararcter/data/models/character_model.dart';
-import 'package:rick_and_morty_app/features/episode/presentation/episode_bloc/episode_bloc.dart';
 import 'package:rick_and_morty_app/shared/theme/app_colors.dart';
 import 'package:rick_and_morty_app/features/episode/presentation/widgets/episode_title_widget.dart';
 
@@ -22,7 +20,6 @@ class CharacterDetailsPage extends StatefulWidget {
 class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
   @override
   void initState() {
-    BlocProvider.of<EpisodeBloc>(context).add(GetEpisodeEvent());
     super.initState();
   }
 
@@ -202,99 +199,99 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
                           const SizedBox(height: 36),
                           const EpisodeTitleWidget(),
                           const SizedBox(height: 24),
-                          BlocBuilder<EpisodeBloc, EpisodeState>(
-                            builder: (context, state) {
-                              if (state is EpisodeSuccess) {
-                                // Use ListView.builder to render episode list dynamically
-                                return ListView.builder(
-                                  physics:
-                                      const NeverScrollableScrollPhysics(), // Disable inner scrolling
-                                  shrinkWrap:
-                                      true, // Wrap content inside SingleChildScrollView
-                                  itemCount: state.model.results?.length ?? 0,
-                                  itemBuilder: (context, index) {
-                                    final episode = state.model.results?[index];
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 8.0),
-                                      child: Row(
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            child: Container(
-                                              height: 74,
-                                              width: 74,
-                                              color: AppColors.blueGreen,
-                                              child: Image.network(
-                                                  widget.characterModel?.image ??
-                                                      ""),
-                                            ),
-                                          ),
-                                          const SizedBox(width: 16),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "Серия ${episode?.id}"
-                                                    .toUpperCase(),
-                                                style: const TextStyle(
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: AppColors.episodeColor,
-                                                ),
-                                              ),
-                                              Text(
-                                                episode?.name != null &&
-                                                        episode!.name!.length >
-                                                            15
-                                                    ? '${episode.name?.substring(0, 16)}...'
-                                                    : episode?.name ?? "",
-                                                style: const TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: AppColors.white,
-                                                ),
-                                              ),
-                                              Text(
-                                                episode?.airDate ?? "",
-                                                style: const TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: AppColors.grey,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const Spacer(),
-                                          IconButton(
-                                            onPressed: () {},
-                                            icon: const Icon(
-                                              Icons.arrow_forward_ios_rounded,
-                                              size: 20,
-                                              color: AppColors.white,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                );
-                              } else if (state is EpisodeLoading) {
-                                return const Center(
-                                  child: CircularProgressIndicator(
-                                    color: AppColors.green,
-                                  ),
-                                );
-                              }
-                              return const Center(
-                                child: CircularProgressIndicator(
-                                  color: AppColors.green,
-                                ),
-                              );
-                            },
-                          ),
+                          // BlocBuilder<EpisodeCubit, EpisodeState>(
+                          //   builder: (context, state) {
+                          //     if (state is EpisodeLoaded) {
+                          //       // Use ListView.builder to render episode list dynamically
+                          //       return ListView.builder(
+                          //         physics:
+                          //             const NeverScrollableScrollPhysics(), // Disable inner scrolling
+                          //         shrinkWrap:
+                          //             true, // Wrap content inside SingleChildScrollView
+                          //         itemCount: state.model.results?.length ?? 0,
+                          //         itemBuilder: (context, index) {
+                          //           final episode = state.model.results?[index];
+                          //           return Padding(
+                          //             padding: const EdgeInsets.symmetric(
+                          //                 vertical: 8.0),
+                          //             child: Row(
+                          //               children: [
+                          //                 ClipRRect(
+                          //                   borderRadius:
+                          //                       BorderRadius.circular(10),
+                          //                   child: Container(
+                          //                     height: 74,
+                          //                     width: 74,
+                          //                     color: AppColors.blueGreen,
+                          //                     child: Image.network(
+                          //                         widget.characterModel?.image ??
+                          //                             ""),
+                          //                   ),
+                          //                 ),
+                          //                 const SizedBox(width: 16),
+                          //                 Column(
+                          //                   crossAxisAlignment:
+                          //                       CrossAxisAlignment.start,
+                          //                   children: [
+                          //                     Text(
+                          //                       "Серия ${episode?.id}"
+                          //                           .toUpperCase(),
+                          //                       style: const TextStyle(
+                          //                         fontSize: 10,
+                          //                         fontWeight: FontWeight.w500,
+                          //                         color: AppColors.episodeColor,
+                          //                       ),
+                          //                     ),
+                          //                     Text(
+                          //                       episode?.name != null &&
+                          //                               episode!.name!.length >
+                          //                                   15
+                          //                           ? '${episode.name?.substring(0, 16)}...'
+                          //                           : episode?.name ?? "",
+                          //                       style: const TextStyle(
+                          //                         fontSize: 16,
+                          //                         fontWeight: FontWeight.w500,
+                          //                         color: AppColors.white,
+                          //                       ),
+                          //                     ),
+                          //                     Text(
+                          //                       episode?.airDate ?? "",
+                          //                       style: const TextStyle(
+                          //                         fontSize: 14,
+                          //                         fontWeight: FontWeight.w400,
+                          //                         color: AppColors.grey,
+                          //                       ),
+                          //                     ),
+                          //                   ],
+                          //                 ),
+                          //                 const Spacer(),
+                          //                 IconButton(
+                          //                   onPressed: () {},
+                          //                   icon: const Icon(
+                          //                     Icons.arrow_forward_ios_rounded,
+                          //                     size: 20,
+                          //                     color: AppColors.white,
+                          //                   ),
+                          //                 ),
+                          //               ],
+                          //             ),
+                          //           );
+                          //         },
+                          //       );
+                          //     } else if (state is EpisodeLoading) {
+                          //       return const Center(
+                          //         child: CircularProgressIndicator(
+                          //           color: AppColors.green,
+                          //         ),
+                          //       );
+                          //     }
+                          //     return const Center(
+                          //       child: CircularProgressIndicator(
+                          //         color: AppColors.green,
+                          //       ),
+                          //     );
+                          //   },
+                          // ),
                         ],
                       ),
                     ),

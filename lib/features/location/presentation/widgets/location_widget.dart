@@ -1,4 +1,3 @@
-
 import 'package:flutter/widgets.dart';
 import 'package:rick_and_morty_app/features/location/data/models/location_model.dart';
 import 'package:rick_and_morty_app/shared/theme/app_colors.dart';
@@ -6,7 +5,7 @@ import 'package:rick_and_morty_app/shared/theme/app_colors.dart';
 class LocationWidget extends StatelessWidget {
   const LocationWidget({super.key, required this.location});
 
-  final MyLocation location;
+  final LocationModel location;
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +24,12 @@ class LocationWidget extends StatelessWidget {
               topRight: Radius.circular(20),
             ),
             child: Image.network(
+              location.residents.isNotEmpty
+                  ? location.residents[0]
+                  : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg",
               height: 150,
               width: double.infinity,
               fit: BoxFit.cover,
-              location.url == null
-                  ? location.residents![0]
-                  : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg",
             ),
           ),
           Padding(

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rick_and_morty_app/features/chararcter/presentation/bloc/character_bloc.dart';
 import 'package:rick_and_morty_app/features/chararcter/presentation/pages/character_details_page.dart';
+import 'package:rick_and_morty_app/features/chararcter/presentation/widgets/text_field_character_widget.dart';
 import 'package:rick_and_morty_app/shared/theme/app_colors.dart';
 import 'package:rick_and_morty_app/features/chararcter/presentation/widgets/grid_view_widget.dart';
 import 'package:rick_and_morty_app/features/chararcter/presentation/widgets/list_view_widget.dart';
@@ -30,6 +31,7 @@ class _CharactersPageState extends State<CharactersPage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        title: TextFieldCharacterWidget(controller: controller),
       ),
       body: GestureDetector(
         behavior: HitTestBehavior.translucent,
@@ -42,70 +44,6 @@ class _CharactersPageState extends State<CharactersPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextField(
-                  onChanged: (value) {
-                    if (value.isNotEmpty) {
-                      BlocProvider.of<CharacterBloc>(context)
-                          .add(GetCharacterEvent());
-                    }
-                  },
-                  controller: controller,
-                  decoration: InputDecoration(
-                    fillColor: AppColors.darkTextEditionColor,
-                    filled: true,
-                    suffixIcon: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          border: Border(
-                            left: BorderSide(
-                              color: Colors.grey,
-                              width: 1.0,
-                            ),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: SvgPicture.asset(
-                            Svgs.filter,
-                            color: AppColors.grey,
-                          ),
-                        ),
-                      ),
-                    ),
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: SvgPicture.asset(
-                        Svgs.search,
-                        color: AppColors.grey,
-                      ),
-                    ),
-                    hintText: "Найти персонажа",
-                    hintStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.grey),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: AppColors.darkTextEditionColor,
-                      ),
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: AppColors.green,
-                      ),
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: AppColors.darkTextEditionColor,
-                      ),
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 24),
                 Row(
                   children: [
                     BlocBuilder<CharacterBloc, CharacterState>(
@@ -159,7 +97,10 @@ class _CharactersPageState extends State<CharactersPage> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            const CharacterDetailsPage(),
+                                            CharacterDetailsPage(
+                                          characterModel:
+                                              state.characters[index],
+                                        ),
                                       ),
                                     );
                                   },

@@ -10,6 +10,7 @@ class CharacterModel {
   final List<String> episode;
   final String? url;
   final String? created;
+  final CharacterLocation? location;
 
   CharacterModel({
     required this.id,
@@ -23,23 +24,27 @@ class CharacterModel {
     required this.episode,
     this.url,
     this.created,
+    this.location,
   });
 
   factory CharacterModel.fromJson(Map<String, dynamic> json) {
     return CharacterModel(
-      id: json['id'],
-      name: json['name'],
-      status: json['status'],
-      species: json['species'],
-      type: json['type'],
-      gender: json['gender'],
+      id: json['id'] as int?,
+      name: json['name'] as String?,
+      status: json['status'] as String?,
+      species: json['species'] as String?,
+      type: json['type'] as String?,
+      gender: json['gender'] as String?,
       origin: json['origin'] != null
-          ? OriginCharacter.fromJson(json['origin'])
+          ? OriginCharacter.fromJson(json['origin'] as Map<String, dynamic>)
           : null,
-      image: json['image'],
-      url: json['url'],
-      created: json['created'],
+      image: json['image'] as String?,
       episode: List<String>.from(json['episode'] ?? []),
+      url: json['url'] as String?,
+      created: json['created'] as String?,
+      location: json['location'] != null
+          ? CharacterLocation.fromJson(json['location'] as Map<String, dynamic>)
+          : null,
     );
   }
 
@@ -53,9 +58,10 @@ class CharacterModel {
       'gender': gender,
       'origin': origin?.toJson(),
       'image': image,
+      'episode': episode,
       'url': url,
       'created': created,
-      'episode': episode,
+      'location': location?.toJson(),
     };
   }
 }
@@ -68,8 +74,8 @@ class OriginCharacter {
 
   factory OriginCharacter.fromJson(Map<String, dynamic> json) {
     return OriginCharacter(
-      name: json['name'],
-      url: json['url'],
+      name: json['name'] as String?,
+      url: json['url'] as String?,
     );
   }
 
@@ -89,8 +95,8 @@ class CharacterLocation {
 
   factory CharacterLocation.fromJson(Map<String, dynamic> json) {
     return CharacterLocation(
-      name: json['name'],
-      url: json['url'],
+      name: json['name'] as String?,
+      url: json['url'] as String?,
     );
   }
 

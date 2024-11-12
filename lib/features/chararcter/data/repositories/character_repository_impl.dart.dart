@@ -13,6 +13,7 @@ class CharacterRepositoryImpl implements CharacterRepository {
       final response =
           await dio.get("https://rickandmortyapi.com/api/character");
       final List characterJson = response.data['results'];
+      print(characterJson);
 
       return characterJson
           .map((json) => CharacterModel.fromJson(json))

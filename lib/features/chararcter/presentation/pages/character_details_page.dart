@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick_and_morty_app/features/chararcter/data/models/character_model.dart';
+import 'package:rick_and_morty_app/features/episode/presentation/cubit/episode_cubit.dart';
+import 'package:rick_and_morty_app/features/episode/presentation/widgets/episode_row_widget.dart';
 import 'package:rick_and_morty_app/shared/theme/app_colors.dart';
 import 'package:rick_and_morty_app/features/episode/presentation/widgets/episode_title_widget.dart';
 
 class CharacterDetailsPage extends StatefulWidget {
+  final CharacterModel? characterModel;
+  final CharacterLocation? characterLocation;
   const CharacterDetailsPage({
     super.key,
     this.characterModel,
     this.characterLocation,
   });
-
-  final CharacterModel? characterModel;
-  final CharacterLocation? characterLocation;
 
   @override
   State<CharacterDetailsPage> createState() => _CharacterDetailsPageState();
@@ -25,6 +27,7 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+    context.read<EpisodeCubit>().getEpisode();
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -167,14 +170,15 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Text(
-                                    "Место рождения",
+                                    "Местоположение",
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400,
                                         color: AppColors.grey),
                                   ),
                                   Text(
-                                    widget.characterLocation?.name ?? "",
+                                    widget.characterModel?.location?.name ??
+                                        "-",
                                     style: const TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400,
@@ -199,99 +203,33 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
                           const SizedBox(height: 36),
                           const EpisodeTitleWidget(),
                           const SizedBox(height: 24),
-                          // BlocBuilder<EpisodeCubit, EpisodeState>(
-                          //   builder: (context, state) {
-                          //     if (state is EpisodeLoaded) {
-                          //       // Use ListView.builder to render episode list dynamically
-                          //       return ListView.builder(
-                          //         physics:
-                          //             const NeverScrollableScrollPhysics(), // Disable inner scrolling
-                          //         shrinkWrap:
-                          //             true, // Wrap content inside SingleChildScrollView
-                          //         itemCount: state.model.results?.length ?? 0,
-                          //         itemBuilder: (context, index) {
-                          //           final episode = state.model.results?[index];
-                          //           return Padding(
-                          //             padding: const EdgeInsets.symmetric(
-                          //                 vertical: 8.0),
-                          //             child: Row(
-                          //               children: [
-                          //                 ClipRRect(
-                          //                   borderRadius:
-                          //                       BorderRadius.circular(10),
-                          //                   child: Container(
-                          //                     height: 74,
-                          //                     width: 74,
-                          //                     color: AppColors.blueGreen,
-                          //                     child: Image.network(
-                          //                         widget.characterModel?.image ??
-                          //                             ""),
-                          //                   ),
-                          //                 ),
-                          //                 const SizedBox(width: 16),
-                          //                 Column(
-                          //                   crossAxisAlignment:
-                          //                       CrossAxisAlignment.start,
-                          //                   children: [
-                          //                     Text(
-                          //                       "Серия ${episode?.id}"
-                          //                           .toUpperCase(),
-                          //                       style: const TextStyle(
-                          //                         fontSize: 10,
-                          //                         fontWeight: FontWeight.w500,
-                          //                         color: AppColors.episodeColor,
-                          //                       ),
-                          //                     ),
-                          //                     Text(
-                          //                       episode?.name != null &&
-                          //                               episode!.name!.length >
-                          //                                   15
-                          //                           ? '${episode.name?.substring(0, 16)}...'
-                          //                           : episode?.name ?? "",
-                          //                       style: const TextStyle(
-                          //                         fontSize: 16,
-                          //                         fontWeight: FontWeight.w500,
-                          //                         color: AppColors.white,
-                          //                       ),
-                          //                     ),
-                          //                     Text(
-                          //                       episode?.airDate ?? "",
-                          //                       style: const TextStyle(
-                          //                         fontSize: 14,
-                          //                         fontWeight: FontWeight.w400,
-                          //                         color: AppColors.grey,
-                          //                       ),
-                          //                     ),
-                          //                   ],
-                          //                 ),
-                          //                 const Spacer(),
-                          //                 IconButton(
-                          //                   onPressed: () {},
-                          //                   icon: const Icon(
-                          //                     Icons.arrow_forward_ios_rounded,
-                          //                     size: 20,
-                          //                     color: AppColors.white,
-                          //                   ),
-                          //                 ),
-                          //               ],
-                          //             ),
-                          //           );
-                          //         },
-                          //       );
-                          //     } else if (state is EpisodeLoading) {
-                          //       return const Center(
-                          //         child: CircularProgressIndicator(
-                          //           color: AppColors.green,
-                          //         ),
-                          //       );
-                          //     }
-                          //     return const Center(
-                          //       child: CircularProgressIndicator(
-                          //         color: AppColors.green,
-                          //       ),
-                          //     );
-                          //   },
-                          // ),
+
+                          SizedBox(
+                            height: 400,
+                            child: BlocBuilder<EpisodeCubit, EpisodeState>(
+                              builder: (context, state) {
+                                if (state is EpisodeLoading) {
+                                  return const Center(
+                                      child: CircularProgressIndicator());
+                                } else if (state is EpisodeLoaded) {
+                                  final episodeData = state.episode;
+                                  return ListView.builder(
+                                    itemCount: episodeData.length,
+                                    itemBuilder: (context, index) {
+                                      return EpisodeRowWidget(
+                                        title: state.episode[index].name,
+                                        episode: state.episode[index].episode,
+                                        date: state.episode[index].airDate,
+                                      );
+                                    },
+                                  );
+                                } else if (state is EpisodeError) {
+                                  return Center(child: Text(state.error));
+                                }
+                                return const SizedBox.shrink();
+                              },
+                            ),
+                          )
                         ],
                       ),
                     ),

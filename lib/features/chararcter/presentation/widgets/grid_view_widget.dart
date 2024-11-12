@@ -16,9 +16,11 @@ class GridViewWidget extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 60,
-          backgroundImage: characters.image != null && characters.image!.isNotEmpty
-              ? NetworkImage(characters.image!)
-              : const AssetImage('assets/images/placeholder.png') as ImageProvider,
+          backgroundImage:
+              characters.image != null && characters.image!.isNotEmpty
+                  ? NetworkImage(characters.image!)
+                  : const AssetImage('assets/images/placeholder.png')
+                      as ImageProvider,
         ),
         const SizedBox(height: 18),
         Text(
@@ -31,7 +33,9 @@ class GridViewWidget extends StatelessWidget {
         ),
         Text(
           characters.name ?? "",
+          textAlign: TextAlign.center,
           style: const TextStyle(
+              height: 1.2,
               fontSize: 16,
               fontWeight: FontWeight.w500,
               color: AppColors.white),

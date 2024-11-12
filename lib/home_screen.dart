@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
               currentIndex = val;
             });
           },
-          backgroundColor: AppColors.darkBgColor,
+          backgroundColor: AppColors.darkTextEditionColor,
           type: BottomNavigationBarType.fixed,
           currentIndex: currentIndex, // Use currentIndex to track selection
           items: [

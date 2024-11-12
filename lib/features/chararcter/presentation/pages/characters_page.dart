@@ -84,8 +84,20 @@ class _CharactersPageState extends State<CharactersPage> {
                                   childAspectRatio: 0.8,
                                 ),
                                 itemCount: state.characters.length,
-                                itemBuilder: (context, index) => GridViewWidget(
-                                  characters: state.characters[index],
+                                itemBuilder: (context, index) =>
+                                    GestureDetector(
+                                  onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          CharacterDetailsPage(
+                                        characterModel: state.characters[index],
+                                      ),
+                                    ),
+                                  ),
+                                  child: GridViewWidget(
+                                    characters: state.characters[index],
+                                  ),
                                 ),
                               )
                             : ListView.builder(

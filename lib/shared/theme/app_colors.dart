@@ -11,4 +11,5 @@ abstract class AppColors {
   static const Color darkTextEditionColor = Color(0xff152A3A);
   static const Color shadowColor = Color(0xff0b1e2da6);
   static const Color episodeColor = Color(0xff3CABC2);
+  
 }

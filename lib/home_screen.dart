@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:rick_and_morty_app/features/chararcter/presentation/pages/characters_page.dart';
 import 'package:rick_and_morty_app/features/episode/presentation/pages/episode_page.dart';
 import 'package:rick_and_morty_app/features/location/presentation/pages/locations_page.dart';
+import 'package:rick_and_morty_app/features/profile/presentation/pages/settings_page.dart';
 import 'package:rick_and_morty_app/shared/theme/app_colors.dart';
 import 'package:rick_and_morty_app/shared/resources/resources.dart';
 
@@ -20,9 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const CharactersPage(),
     const LocationsPage(),
     const EpisodePage(),
-    const Scaffold(
-      body: Text("4"),
-    )
+    const SettingsPage()
   ];
 
   @override

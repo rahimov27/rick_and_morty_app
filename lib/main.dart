@@ -6,7 +6,7 @@ import 'package:rick_and_morty_app/features/chararcter/presentation/bloc/charact
 import 'package:rick_and_morty_app/features/episode/data/datasources/episode_remote_data_source.dart';
 import 'package:rick_and_morty_app/features/episode/data/repositories/episode_repositories.dart';
 import 'package:rick_and_morty_app/features/episode/presentation/cubit/episode_cubit.dart';
-import 'package:rick_and_morty_app/features/location/data/datasources/location_remote_data_source_impl.dart';
+import 'package:rick_and_morty_app/features/location/data/datasources/location_remote_datasource.dart';
 import 'package:rick_and_morty_app/features/location/data/repositories/location_repository_impl.dart';
 import 'package:rick_and_morty_app/features/location/presentation/bloc/location_bloc.dart';
 import 'package:rick_and_morty_app/shared/dio_settings.dart';
@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dio = DioSettings().dio;
-    final locationRemoteDataSource = LocationRemoteDataSourceImpl(dio: dio);
 
     return ChangeNotifierProvider(
       create: (context) => ThemeProvider(),
@@ -40,8 +39,7 @@ class MyApp extends StatelessWidget {
               ),
               RepositoryProvider(
                 create: (_) => LocationRepositoryImpl(
-                  remoteDataSource: locationRemoteDataSource,
-                ),
+                    remoteDataSource: LocationRemoteDataSourceImpl(dio: dio)),
               ),
             ],
             child: MultiBlocProvider(

@@ -15,7 +15,6 @@ class EpisodeRemoteDataSourceImpl implements CharacterRemoteDataSource {
     final response = await dio.get("https://rickandmortyapi.com/api/episode");
     if (response.statusCode == 200) {
       final List episodeJson = response.data['results'];
-      print(response.statusCode);
       return episodeJson.map((json) => EpisodeModel.fromJson(json)).toList();
     } else {
       throw Exception('Failed to load characters');

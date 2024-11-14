@@ -9,6 +9,11 @@ class LocationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<String> locationsImages = [
+      "https://static.wikia.nocookie.net/rickandmorty/images/d/d3/Anatomy_Park_7.png/revision/latest/scale-to-width-down/1200?cb=20160913082442",
+      "https://static.wikia.nocookie.net/rickandmorty/images/1/11/Meta_reality.jpg/revision/latest?cb=20230219144844",
+      "https://static.wikia.nocookie.net/rickandmorty/images/a/a0/TamorusLite.png/revision/latest/scale-to-width-down/1200?cb=20221210222821"
+    ];
     return Container(
       height: 218,
       decoration: BoxDecoration(
@@ -23,13 +28,18 @@ class LocationWidget extends StatelessWidget {
               topLeft: Radius.circular(20),
               topRight: Radius.circular(20),
             ),
-            child: Image.network(
-              location.residents.isNotEmpty
-                  ? location.residents[0]
-                  : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg",
+            child: SizedBox(
               height: 150,
-              width: double.infinity,
-              fit: BoxFit.cover,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: locationsImages.length,
+                itemBuilder: (context, index) => Image.network(
+                  locationsImages[index],
+                  height: 150,
+                  width: 300, // или любая фиксированная ширина для изображений
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
           ),
           Padding(

@@ -54,8 +54,7 @@ class MyApp extends StatelessWidget {
                 ),
                 BlocProvider(
                   create: (context) => EpisodeCubit(
-                    RepositoryProvider.of<EpisodeRepositoryImpl>(context)
-                  ),
+                      RepositoryProvider.of<EpisodeRepositoryImpl>(context)),
                 ),
                 BlocProvider(
                   create: (context) => LocationBloc(

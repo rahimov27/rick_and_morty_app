@@ -15,7 +15,7 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
     on<GetCharacterEvent>((event, emit) async {
       emit(CharacterLoading());
       try {
-        final characters = await repository.getCharacter();
+        final characters = await repository.getCharacters();
         emit(CharacterSuccess(characters: characters));
       } catch (e) {
         emit(CharacterError(error: "Error: $e"));

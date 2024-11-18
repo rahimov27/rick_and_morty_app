@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:rick_and_morty_app/features/episode/data/models/episode_model.dart';
 
-abstract class CharacterRemoteDataSource {
+abstract class EpisodeRemoteDataSource {
   Future<List<EpisodeModel>> getEpisode();
 }
 
-class EpisodeRemoteDataSourceImpl implements CharacterRemoteDataSource {
+class EpisodeRemoteDataSourceImpl implements EpisodeRemoteDataSource {
   final Dio dio;
 
   EpisodeRemoteDataSourceImpl({required this.dio});

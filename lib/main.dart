@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dio = DioSettings().dio;
+    final dio = DioSettings().dio; // Ensure this is correctly initialized
 
     return ChangeNotifierProvider(
       create: (context) => ThemeProvider(),
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
           return MultiRepositoryProvider(
             providers: [
               RepositoryProvider(
-                create: (_) => CharacterRepositoryImpl(dio: dio),
+                create: (_) => CharacterRepositoryImpl(dio: dio), // Pass Dio instance
               ),
               RepositoryProvider(
                 create: (_) => EpisodeRepositoryImpl(

@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:rick_and_morty_app/features/episode/data/models/episode_model.dart';
-import 'package:rick_and_morty_app/features/episode/domain/episode_repostory_impl.dart';
+import 'package:rick_and_morty_app/features/episode/domain/repositories/episode_repostory_impl.dart';
 
 part 'episode_state.dart';
 

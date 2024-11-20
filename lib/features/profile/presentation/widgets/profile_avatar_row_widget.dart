@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:rick_and_morty_app/shared/theme/app_colors.dart';
 
-class ProfileAvatarRowWidget extends StatelessWidget {
+class ProfileAvatarRowWidget extends StatefulWidget {
   const ProfileAvatarRowWidget({
     super.key,
     required this.profileUrl,
@@ -10,12 +12,28 @@ class ProfileAvatarRowWidget extends StatelessWidget {
   final String profileUrl;
 
   @override
+  State<ProfileAvatarRowWidget> createState() => _ProfileAvatarRowWidgetState();
+}
+
+class _ProfileAvatarRowWidgetState extends State<ProfileAvatarRowWidget> {
+  File? _selectedImage;
+
+  @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        CircleAvatar(
-          radius: 40,
-          backgroundImage: NetworkImage(profileUrl),
+        GestureDetector(
+          onTap: () {
+            _pickImageFromGallery();
+          },
+          child: CircleAvatar(
+            radius: 40,
+            backgroundImage: _selectedImage != null
+                ? FileImage(
+                    _selectedImage!) // Use FileImage when there's a selected image
+                : NetworkImage(widget.profileUrl)
+                    as ImageProvider, // Use NetworkImage otherwise
+          ),
         ),
         const SizedBox(width: 16),
         const Column(
@@ -41,5 +59,17 @@ class ProfileAvatarRowWidget extends StatelessWidget {
         )
       ],
     );
+  }
+
+  Future<void> _pickImageFromGallery() async {
+    final returnedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (returnedImage != null) {
+      // Ensure that the user didn't cancel the selection
+      setState(() {
+        _selectedImage = File(returnedImage.path);
+      });
+    }
   }
 }

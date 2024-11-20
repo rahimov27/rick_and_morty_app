@@ -40,12 +40,12 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
                         children: [
                           Stack(
                             children: [
-                              // Image.network(
-                              //   width: double.infinity,
-                              //   fit: BoxFit.cover,
-                              //   height: 300,
-                              //   "${widget.characterEntity?.image}",
-                              // ),
+                              Image.network(
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                                height: 300,
+                                "${widget.characterEntity?.image}",
+                              ),
                               Container(
                                 height: 300,
                                 color: Colors.black
@@ -58,14 +58,15 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
                           Column(
                             children: [
                               Text(
-                                widget.characterEntity?.name ?? 'Character Name',
+                                widget.characterEntity?.name ??
+                                    'Character Name',
                                 style: const TextStyle(
                                     fontSize: 34,
                                     fontWeight: FontWeight.w400,
                                     color: AppColors.white),
                               ),
                               Text(
-                                widget.characterEntity?.status?.toUpperCase() ??
+                                widget.characterEntity?.status.toUpperCase() ??
                                     'Character Status',
                                 style: const TextStyle(
                                     fontSize: 10,
@@ -131,13 +132,13 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
                             ],
                           ),
                           const SizedBox(height: 20),
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text(
+                                  Text(
                                     "Место рождения",
                                     style: TextStyle(
                                         fontSize: 14,
@@ -145,28 +146,28 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
                                         color: AppColors.grey),
                                   ),
                                   Text(
-                                        'Character Origin',
-                                    style: const TextStyle(
+                                    'Character Origin',
+                                    style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400,
                                         color: AppColors.white),
                                   ),
                                 ],
                               ),
-                              const Icon(
+                              Icon(
                                 Icons.arrow_forward_ios_rounded,
                                 color: AppColors.white,
                               )
                             ],
                           ),
                           const SizedBox(height: 20),
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text(
+                                  Text(
                                     "Местоположение",
                                     style: TextStyle(
                                         fontSize: 14,
@@ -174,15 +175,15 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
                                         color: AppColors.grey),
                                   ),
                                   Text(
-                                        "-",
-                                    style: const TextStyle(
+                                    "-",
+                                    style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400,
                                         color: AppColors.white),
                                   ),
                                 ],
                               ),
-                              const Icon(
+                              Icon(
                                 Icons.arrow_forward_ios_rounded,
                                 color: AppColors.white,
                               )
@@ -230,19 +231,19 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
                       ),
                     ),
                   ),
-                  // Positioned(
-                  //   top: 210, // корректное позиционирование аватара
-                  //   left: MediaQuery.of(context).size.width / 2 - 80,
-                  //   child: CircleAvatar(
-                  //     radius: 80,
-                  //     backgroundColor: AppColors.darkBgColor,
-                  //     child: CircleAvatar(
-                  //       radius: 73,
-                  //       backgroundImage:
-                  //           NetworkImage(widget.characterEntity?.image ?? ''),
-                  //     ),
-                  //   ),
-                  // ),
+                  Positioned(
+                    top: 210, // корректное позиционирование аватара
+                    left: MediaQuery.of(context).size.width / 2 - 80,
+                    child: CircleAvatar(
+                      radius: 80,
+                      backgroundColor: AppColors.darkBgColor,
+                      child: CircleAvatar(
+                        radius: 73,
+                        backgroundImage:
+                            NetworkImage(widget.characterEntity?.image ?? ''),
+                      ),
+                    ),
+                  ),
                   // Fixed CircleAvatar
                 ],
               ),

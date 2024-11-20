@@ -54,9 +54,7 @@ class TextFieldCharacterWidget extends StatelessWidget {
         ),
         hintText: "Найти персонажа",
         hintStyle: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-            color: AppColors.grey),
+            fontSize: 16, fontWeight: FontWeight.w400, color: AppColors.grey),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(
             color: AppColors.darkTextEditionColor,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rick_and_morty_app/features/chararcter/data/models/character_model.dart';
 import 'package:rick_and_morty_app/features/chararcter/domain/entities/character_entity.dart';
 import 'package:rick_and_morty_app/shared/theme/app_colors.dart';
 
@@ -15,17 +14,16 @@ class GridViewWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // CircleAvatar(
-        //   radius: 60,
-        //   backgroundImage:
-        //       characterEntity.image != null && characterEntity.image!.isNotEmpty
-        //           ? NetworkImage(characterEntity.image!)
-        //           : const AssetImage('assets/images/placeholder.png')
-        //               as ImageProvider,
-        // ),
+        CircleAvatar(
+          radius: 60,
+          backgroundImage: characterEntity.image.isNotEmpty
+              ? NetworkImage(characterEntity.image)
+              : const AssetImage('assets/images/placeholder.png')
+                  as ImageProvider,
+        ),
         const SizedBox(height: 18),
         Text(
-          characterEntity.status ?? "",
+          characterEntity.status,
           style: TextStyle(
             fontSize: 10,
             fontWeight: FontWeight.w500,
@@ -33,7 +31,7 @@ class GridViewWidget extends StatelessWidget {
           ),
         ),
         Text(
-          characterEntity.name ?? "",
+          characterEntity.name,
           textAlign: TextAlign.center,
           style: const TextStyle(
               height: 1.2,

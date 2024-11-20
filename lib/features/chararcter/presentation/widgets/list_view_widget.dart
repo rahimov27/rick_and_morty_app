@@ -20,21 +20,20 @@ class ListViewWidget extends StatelessWidget {
         onTap: onTap,
         child: Row(
           children: [
-            // CircleAvatar(
-            //   radius: 37,
-            //   backgroundImage:
-            //       characterEntity.image != null && characterEntity.image!.isNotEmpty
-            //           ? NetworkImage(characterEntity.image!)
-            //           : const AssetImage('assets/images/placeholder.png')
-            //               as ImageProvider,
-            // ),
+            CircleAvatar(
+              radius: 37,
+              backgroundImage: characterEntity.image.isNotEmpty
+                  ? NetworkImage(characterEntity.image)
+                  : const AssetImage('assets/images/placeholder.png')
+                      as ImageProvider,
+            ),
             const SizedBox(width: 18),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  characterEntity.status ?? "",
+                  characterEntity.status,
                   style: TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.w500,
@@ -42,7 +41,7 @@ class ListViewWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  characterEntity.name ?? "",
+                  characterEntity.name,
                   style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,

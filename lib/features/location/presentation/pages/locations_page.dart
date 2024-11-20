@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rick_and_morty_app/features/chararcter/presentation/pages/characters_page.dart';
 import 'package:rick_and_morty_app/features/location/presentation/bloc/location_bloc.dart';
 import 'package:rick_and_morty_app/features/location/presentation/widgets/location_widget.dart';
 
@@ -17,7 +18,7 @@ class _LocationsPageState extends State<LocationsPage> {
 
     // Вызов события после первой отрисовки страницы
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      BlocProvider.of<LocationBloc>(context).add(GetLocationEvent());
+      BlocProvider.of<LocationBloc>(context).add(LoadLocationsEvent());
     });
   }
 
@@ -30,31 +31,30 @@ class _LocationsPageState extends State<LocationsPage> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
-              BlocBuilder<LocationBloc, LocationState>(
+              Expanded(child: BlocBuilder<LocationBloc, LocationState>(
                 builder: (context, state) {
-                  if (state is LocationSuccess) {
-                    return Expanded(
-                      child: ListView.builder(
-                        itemCount: state.location.length,
-                        itemBuilder: (context, index) {
-                          final location = state.location[index];
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 24),
-                            child: LocationWidget(location: location),
-                          );
-                        },
-                      ),
+                  if (state is LocationLoaded) {
+                    print(state.locations); // Verify if it's the correct data
+                    return ListView.builder(
+                      itemCount: state.locations.length,
+                      itemBuilder: (context, index) {
+                        final location = state.locations[index];
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 24),
+                          child: LocationWidget(location: location),
+                        );
+                      },
                     );
                   } else if (state is LocationLoading) {
-                    return const Center(child: CircularProgressIndicator());
+                    return const Center(child: AppCircularWidget());
                   } else if (state is LocationError) {
                     return Center(
-                      child: Text("Ошибка: ${state.error}"),
+                      child: Text("Error: ${state.error}"),
                     );
                   }
                   return const SizedBox();
                 },
-              ),
+              )),
             ],
           ),
         ),

@@ -18,7 +18,7 @@ class TextFieldCharacterWidget extends StatelessWidget {
     return TextField(
       onChanged: (value) {
         if (value.isNotEmpty) {
-          BlocProvider.of<CharacterBloc>(context).add(GetCharacterEvent());
+          BlocProvider.of<CharacterBloc>(context).add(LoadCharactersEvent());
         }
       },
       controller: controller,
@@ -54,9 +54,7 @@ class TextFieldCharacterWidget extends StatelessWidget {
         ),
         hintText: "Найти персонажа",
         hintStyle: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-            color: AppColors.grey),
+            fontSize: 16, fontWeight: FontWeight.w400, color: AppColors.grey),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(
             color: AppColors.darkTextEditionColor,

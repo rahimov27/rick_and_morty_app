@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rick_and_morty_app/features/chararcter/data/models/character_model.dart';
+import 'package:rick_and_morty_app/features/chararcter/domain/entities/character_entity.dart';
 import 'package:rick_and_morty_app/features/episode/presentation/cubit/episode_cubit.dart';
 import 'package:rick_and_morty_app/features/episode/presentation/widgets/episode_row_widget.dart';
 import 'package:rick_and_morty_app/shared/theme/app_colors.dart';
 import 'package:rick_and_morty_app/features/episode/presentation/widgets/episode_title_widget.dart';
 
 class CharacterDetailsPage extends StatefulWidget {
-  final CharacterModel? characterModel;
-  final CharacterLocation? characterLocation;
+  final CharacterEntity? characterEntity;
   const CharacterDetailsPage({
     super.key,
-    this.characterModel,
-    this.characterLocation,
+    this.characterEntity,
   });
 
   @override
@@ -46,7 +44,7 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
                                 width: double.infinity,
                                 fit: BoxFit.cover,
                                 height: 300,
-                                "${widget.characterModel?.image}",
+                                "${widget.characterEntity?.image}",
                               ),
                               Container(
                                 height: 300,
@@ -60,14 +58,15 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
                           Column(
                             children: [
                               Text(
-                                widget.characterModel?.name ?? 'Character Name',
+                                widget.characterEntity?.name ??
+                                    'Character Name',
                                 style: const TextStyle(
                                     fontSize: 34,
                                     fontWeight: FontWeight.w400,
                                     color: AppColors.white),
                               ),
                               Text(
-                                widget.characterModel?.status?.toUpperCase() ??
+                                widget.characterEntity?.status.toUpperCase() ??
                                     'Character Status',
                                 style: const TextStyle(
                                     fontSize: 10,
@@ -101,7 +100,7 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
                                         color: AppColors.grey),
                                   ),
                                   Text(
-                                    widget.characterModel?.gender ??
+                                    widget.characterEntity?.gender ??
                                         'Character Gender',
                                     style: const TextStyle(
                                         fontSize: 14,
@@ -121,7 +120,7 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
                                         color: AppColors.grey),
                                   ),
                                   Text(
-                                    widget.characterModel?.species ??
+                                    widget.characterEntity?.species ??
                                         'Character Species',
                                     style: const TextStyle(
                                         fontSize: 14,
@@ -133,13 +132,13 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
                             ],
                           ),
                           const SizedBox(height: 20),
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text(
+                                  Text(
                                     "Место рождения",
                                     style: TextStyle(
                                         fontSize: 14,
@@ -147,29 +146,28 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
                                         color: AppColors.grey),
                                   ),
                                   Text(
-                                    widget.characterModel?.origin?.name ??
-                                        'Character Origin',
-                                    style: const TextStyle(
+                                    'Character Origin',
+                                    style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400,
                                         color: AppColors.white),
                                   ),
                                 ],
                               ),
-                              const Icon(
+                              Icon(
                                 Icons.arrow_forward_ios_rounded,
                                 color: AppColors.white,
                               )
                             ],
                           ),
                           const SizedBox(height: 20),
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text(
+                                  Text(
                                     "Местоположение",
                                     style: TextStyle(
                                         fontSize: 14,
@@ -177,16 +175,15 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
                                         color: AppColors.grey),
                                   ),
                                   Text(
-                                    widget.characterModel?.location?.name ??
-                                        "-",
-                                    style: const TextStyle(
+                                    "-",
+                                    style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400,
                                         color: AppColors.white),
                                   ),
                                 ],
                               ),
-                              const Icon(
+                              Icon(
                                 Icons.arrow_forward_ios_rounded,
                                 color: AppColors.white,
                               )
@@ -243,7 +240,7 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
                       child: CircleAvatar(
                         radius: 73,
                         backgroundImage:
-                            NetworkImage(widget.characterModel?.image ?? ''),
+                            NetworkImage(widget.characterEntity?.image ?? ''),
                       ),
                     ),
                   ),

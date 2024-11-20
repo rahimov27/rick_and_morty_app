@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rick_and_morty_app/features/chararcter/presentation/pages/characters_page.dart';
 import 'package:rick_and_morty_app/features/episode/presentation/cubit/episode_cubit.dart';
 import 'package:rick_and_morty_app/features/episode/presentation/widgets/episode_row_widget.dart';
 import 'package:rick_and_morty_app/shared/theme/app_colors.dart';
@@ -66,7 +67,7 @@ class EpisodePage extends StatelessWidget {
                 child: BlocBuilder<EpisodeCubit, EpisodeState>(
                   builder: (context, state) {
                     if (state is EpisodeLoading) {
-                      return const Center(child: CircularProgressIndicator());
+                      return const Center(child: AppCircularWidget());
                     } else if (state is EpisodeLoaded) {
                       return Column(
                         children: [

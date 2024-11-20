@@ -10,6 +10,7 @@ import 'package:rick_and_morty_app/features/episode/data/repositories/episode_re
 import 'package:rick_and_morty_app/features/episode/presentation/cubit/episode_cubit.dart';
 import 'package:rick_and_morty_app/features/location/data/datasources/location_remote_datasource.dart';
 import 'package:rick_and_morty_app/features/location/data/repositories/location_repository_impl.dart';
+import 'package:rick_and_morty_app/features/location/domain/usecases/get_location_usecase.dart';
 import 'package:rick_and_morty_app/features/location/presentation/bloc/location_bloc.dart';
 import 'package:rick_and_morty_app/shared/dio_settings.dart';
 import 'package:rick_and_morty_app/shared/theme/theme_provider.dart';
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
               ),
               RepositoryProvider(
                 create: (_) => LocationRepositoryImpl(
-                    remoteDataSource: LocationRemoteDataSourceImpl(dio: dio)),
+                    remoteDataSource: LocationRemoteDataSourceImpl(dio)),
               ),
             ],
             child: MultiBlocProvider(
@@ -62,8 +63,11 @@ class MyApp extends StatelessWidget {
                 ),
                 BlocProvider(
                   create: (context) => LocationBloc(
-                    repository:
-                        RepositoryProvider.of<LocationRepositoryImpl>(context),
+                    GetLocationUsecase(
+                      locationRepository:
+                          RepositoryProvider.of<LocationRepositoryImpl>(
+                              context),
+                    ),
                   ),
                 ),
               ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rick_and_morty_app/features/chararcter/presentation/pages/characters_page.dart';
 import 'package:rick_and_morty_app/features/location/presentation/bloc/location_bloc.dart';
 import 'package:rick_and_morty_app/features/location/presentation/widgets/location_widget.dart';
 
@@ -45,7 +46,7 @@ class _LocationsPageState extends State<LocationsPage> {
                       },
                     );
                   } else if (state is LocationLoading) {
-                    return const Center(child: CircularProgressIndicator());
+                    return const Center(child: AppCircularWidget());
                   } else if (state is LocationError) {
                     return Center(
                       child: Text("Error: ${state.error}"),

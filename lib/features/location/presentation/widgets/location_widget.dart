@@ -10,8 +10,10 @@ class LocationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Assuming your LocationModel or LocationEntity has a list of resident URLs
-    final List<String> residentsImages =
-        location.residents; // Adjust this line accordingly
+    final List<String> residentsImages = [
+      "https://static.wikia.nocookie.net/rickandmorty/images/d/d3/Anatomy_Park_7.png/revision/latest/scale-to-width-down/1200?cb=20160913082442",
+      "https://platform.vox.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/24415978/rick_and_morty_s4_image.png?quality=90&strip=all&crop=7.8125,0,84.375,100"
+    ]; // Adjust this line accordingly
 
     return Container(
       height: 218,
@@ -33,11 +35,10 @@ class LocationWidget extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 itemCount: residentsImages.length,
                 itemBuilder: (context, index) => Image.network(
-                  residentsImages[
-                      index], // Assuming the residents list contains image URLs
+                  residentsImages[index],
                   height: 150,
-                  width: 300, // or any fixed width for images
-                  fit: BoxFit.cover,
+                  width: 300,
+                  fit: BoxFit.fill,
                 ),
               ),
             ),

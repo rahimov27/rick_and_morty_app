@@ -5,6 +5,7 @@ import 'package:rick_and_morty_app/features/chararcter/data/datasources/characte
 import 'package:rick_and_morty_app/features/chararcter/data/repositories/character_repository_impl.dart.dart';
 import 'package:rick_and_morty_app/features/chararcter/domain/usecases/get_character_usecase.dart';
 import 'package:rick_and_morty_app/features/chararcter/presentation/bloc/character_bloc.dart';
+import 'package:rick_and_morty_app/features/chararcter/providers/character_count_provider.dart';
 import 'package:rick_and_morty_app/features/episode/data/datasources/episode_remote_data_source.dart';
 import 'package:rick_and_morty_app/features/episode/data/repositories/episode_repositories.dart';
 import 'package:rick_and_morty_app/features/episode/presentation/cubit/episode_cubit.dart';
@@ -46,35 +47,38 @@ class MyApp extends StatelessWidget {
                     remoteDataSource: LocationRemoteDataSourceImpl(dio)),
               ),
             ],
-            child: MultiBlocProvider(
-              providers: [
-                BlocProvider(
-                  create: (context) => CharacterBloc(
-                    GetCharactersUseCase(
-                      repository:
-                          RepositoryProvider.of<CharacterRepositoryImpl>(
-                              context), // Pass the correct repository
+            child: ChangeNotifierProvider(
+              create: (context) => CharacterCountProvider(dio),
+              child: MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (context) => CharacterBloc(
+                      GetCharactersUseCase(
+                        repository:
+                            RepositoryProvider.of<CharacterRepositoryImpl>(
+                                context), // Pass the correct repository
+                      ),
                     ),
                   ),
-                ),
-                BlocProvider(
-                  create: (context) => EpisodeCubit(
-                      RepositoryProvider.of<EpisodeRepositoryImpl>(context)),
-                ),
-                BlocProvider(
-                  create: (context) => LocationBloc(
-                    GetLocationUsecase(
-                      locationRepository:
-                          RepositoryProvider.of<LocationRepositoryImpl>(
-                              context),
+                  BlocProvider(
+                    create: (context) => EpisodeCubit(
+                        RepositoryProvider.of<EpisodeRepositoryImpl>(context)),
+                  ),
+                  BlocProvider(
+                    create: (context) => LocationBloc(
+                      GetLocationUsecase(
+                        locationRepository:
+                            RepositoryProvider.of<LocationRepositoryImpl>(
+                                context),
+                      ),
                     ),
                   ),
+                ],
+                child: MaterialApp(
+                  title: 'Rick and Morty App',
+                  theme: context.watch<ThemeProvider>().theme,
+                  home: const HomeScreen(),
                 ),
-              ],
-              child: MaterialApp(
-                title: 'Rick and Morty App',
-                theme: context.watch<ThemeProvider>().theme,
-                home: const HomeScreen(),
               ),
             ),
           );

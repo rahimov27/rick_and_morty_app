@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rick_and_morty_app/features/chararcter/data/models/character_model.dart';
+import 'package:rick_and_morty_app/features/chararcter/domain/entities/character_entity.dart';
 import 'package:rick_and_morty_app/features/episode/presentation/cubit/episode_cubit.dart';
 import 'package:rick_and_morty_app/features/episode/presentation/widgets/episode_row_widget.dart';
 import 'package:rick_and_morty_app/shared/theme/app_colors.dart';
 import 'package:rick_and_morty_app/features/episode/presentation/widgets/episode_title_widget.dart';
 
 class CharacterDetailsPage extends StatefulWidget {
-  final CharacterModel? characterModel;
-  final CharacterLocation? characterLocation;
+  final CharacterEntity? characterEntity;
   const CharacterDetailsPage({
     super.key,
-    this.characterModel,
-    this.characterLocation,
+    this.characterEntity,
   });
 
   @override
@@ -42,12 +40,12 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
                         children: [
                           Stack(
                             children: [
-                              Image.network(
-                                width: double.infinity,
-                                fit: BoxFit.cover,
-                                height: 300,
-                                "${widget.characterModel?.image}",
-                              ),
+                              // Image.network(
+                              //   width: double.infinity,
+                              //   fit: BoxFit.cover,
+                              //   height: 300,
+                              //   "${widget.characterEntity?.image}",
+                              // ),
                               Container(
                                 height: 300,
                                 color: Colors.black
@@ -60,14 +58,14 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
                           Column(
                             children: [
                               Text(
-                                widget.characterModel?.name ?? 'Character Name',
+                                widget.characterEntity?.name ?? 'Character Name',
                                 style: const TextStyle(
                                     fontSize: 34,
                                     fontWeight: FontWeight.w400,
                                     color: AppColors.white),
                               ),
                               Text(
-                                widget.characterModel?.status?.toUpperCase() ??
+                                widget.characterEntity?.status?.toUpperCase() ??
                                     'Character Status',
                                 style: const TextStyle(
                                     fontSize: 10,
@@ -101,7 +99,7 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
                                         color: AppColors.grey),
                                   ),
                                   Text(
-                                    widget.characterModel?.gender ??
+                                    widget.characterEntity?.gender ??
                                         'Character Gender',
                                     style: const TextStyle(
                                         fontSize: 14,
@@ -121,7 +119,7 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
                                         color: AppColors.grey),
                                   ),
                                   Text(
-                                    widget.characterModel?.species ??
+                                    widget.characterEntity?.species ??
                                         'Character Species',
                                     style: const TextStyle(
                                         fontSize: 14,
@@ -147,7 +145,6 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
                                         color: AppColors.grey),
                                   ),
                                   Text(
-                                    widget.characterModel?.origin?.name ??
                                         'Character Origin',
                                     style: const TextStyle(
                                         fontSize: 14,
@@ -177,7 +174,6 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
                                         color: AppColors.grey),
                                   ),
                                   Text(
-                                    widget.characterModel?.location?.name ??
                                         "-",
                                     style: const TextStyle(
                                         fontSize: 14,
@@ -234,19 +230,19 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
                       ),
                     ),
                   ),
-                  Positioned(
-                    top: 210, // корректное позиционирование аватара
-                    left: MediaQuery.of(context).size.width / 2 - 80,
-                    child: CircleAvatar(
-                      radius: 80,
-                      backgroundColor: AppColors.darkBgColor,
-                      child: CircleAvatar(
-                        radius: 73,
-                        backgroundImage:
-                            NetworkImage(widget.characterModel?.image ?? ''),
-                      ),
-                    ),
-                  ),
+                  // Positioned(
+                  //   top: 210, // корректное позиционирование аватара
+                  //   left: MediaQuery.of(context).size.width / 2 - 80,
+                  //   child: CircleAvatar(
+                  //     radius: 80,
+                  //     backgroundColor: AppColors.darkBgColor,
+                  //     child: CircleAvatar(
+                  //       radius: 73,
+                  //       backgroundImage:
+                  //           NetworkImage(widget.characterEntity?.image ?? ''),
+                  //     ),
+                  //   ),
+                  // ),
                   // Fixed CircleAvatar
                 ],
               ),

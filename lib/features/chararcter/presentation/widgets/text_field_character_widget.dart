@@ -18,7 +18,7 @@ class TextFieldCharacterWidget extends StatelessWidget {
     return TextField(
       onChanged: (value) {
         if (value.isNotEmpty) {
-          BlocProvider.of<CharacterBloc>(context).add(GetCharacterEvent());
+          BlocProvider.of<CharacterBloc>(context).add(LoadCharactersEvent());
         }
       },
       controller: controller,

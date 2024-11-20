@@ -22,7 +22,7 @@ class _CharactersPageState extends State<CharactersPage> {
 
   @override
   void initState() {
-    BlocProvider.of<CharacterBloc>(context).add(GetCharacterEvent());
+    BlocProvider.of<CharacterBloc>(context).add(LoadCharactersEvent());
     super.initState();
   }
 
@@ -48,7 +48,7 @@ class _CharactersPageState extends State<CharactersPage> {
                   children: [
                     BlocBuilder<CharacterBloc, CharacterState>(
                       builder: (context, state) {
-                        if (state is CharacterSuccess) {
+                        if (state is CharacterLoaded) {
                           return Text(
                             "Всего персонажей: ${state.characters.length}",
                             style: const TextStyle(color: AppColors.grey),
@@ -73,7 +73,7 @@ class _CharactersPageState extends State<CharactersPage> {
                 ),
                 BlocBuilder<CharacterBloc, CharacterState>(
                   builder: (context, state) {
-                    if (state is CharacterSuccess) {
+                    if (state is CharacterLoaded) {
                       return Expanded(
                         child: isGrid
                             ? GridView.builder(
@@ -91,12 +91,13 @@ class _CharactersPageState extends State<CharactersPage> {
                                     MaterialPageRoute(
                                       builder: (context) =>
                                           CharacterDetailsPage(
-                                        characterModel: state.characters[index],
+                                        characterEntity:
+                                            state.characters[index],
                                       ),
                                     ),
                                   ),
                                   child: GridViewWidget(
-                                    characters: state.characters[index],
+                                    characterEntity: state.characters[index],
                                   ),
                                 ),
                               )
@@ -110,13 +111,13 @@ class _CharactersPageState extends State<CharactersPage> {
                                       MaterialPageRoute(
                                         builder: (context) =>
                                             CharacterDetailsPage(
-                                          characterModel:
+                                          characterEntity:
                                               state.characters[index],
                                         ),
                                       ),
                                     );
                                   },
-                                  characters: state.characters[index],
+                                  characterEntity: state.characters[index],
                                 ),
                               ),
                       );

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:rick_and_morty_app/features/chararcter/data/datasources/character_remote_datasource.dart';
 import 'package:rick_and_morty_app/features/chararcter/data/repositories/character_repository_impl.dart.dart';
+import 'package:rick_and_morty_app/features/chararcter/domain/repositories/character_repository.dart';
+import 'package:rick_and_morty_app/features/chararcter/domain/usecases/get_character_usecase.dart';
 import 'package:rick_and_morty_app/features/chararcter/presentation/bloc/character_bloc.dart';
 import 'package:rick_and_morty_app/features/episode/data/datasources/episode_remote_data_source.dart';
 import 'package:rick_and_morty_app/features/episode/data/repositories/episode_repositories.dart';
@@ -31,7 +34,8 @@ class MyApp extends StatelessWidget {
           return MultiRepositoryProvider(
             providers: [
               RepositoryProvider(
-                create: (_) => CharacterRepositoryImpl(dio: dio), // Pass Dio instance
+                create: (_) => CharacterRepositoryImpl(
+                    remoteDataSource: CharacterRemoteDatasourceImpl(dio)),
               ),
               RepositoryProvider(
                 create: (_) => EpisodeRepositoryImpl(
@@ -46,8 +50,11 @@ class MyApp extends StatelessWidget {
               providers: [
                 BlocProvider(
                   create: (context) => CharacterBloc(
-                    repository:
-                        RepositoryProvider.of<CharacterRepositoryImpl>(context),
+                    GetCharactersUseCase(
+                      repository:
+                          RepositoryProvider.of<CharacterRepositoryImpl>(
+                              context), // Pass the correct repository
+                    ),
                   ),
                 ),
                 BlocProvider(

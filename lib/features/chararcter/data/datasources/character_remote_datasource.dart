@@ -12,22 +12,13 @@ class CharacterRemoteDatasourceImpl implements CharacterRemoteDatasource {
 
   @override
   Future<List<CharacterModel>> getCharacters() async {
-    try {
-      final response =
-          await dio.get("https://rickandmortyapi.com/api/character");
-      if (response.statusCode == 200) {
-        List<CharacterModel> characters = (response.data['results'] as List)
-            .map((e) => CharacterModel.fromJson(e))
-            .toList();
-        return characters;
-      } else {
-        // Throwing custom exception for non-200 status codes
-        throw Exception(
-            'Failed to fetch characters. Status code: ${response.statusCode}');
-      }
-    } catch (e) {
-      // Throwing a custom exception for errors
-      throw Exception('Error occurred while fetching characters: $e');
+    final response = await dio.get("https://rickandmortyapi.com/api/character");
+    if (response.statusCode == 200) {
+      return (response.data['results'] as List)
+          .map((e) => CharacterModel.fromJson(e))
+          .toList();
+    } else {
+      throw Exception('Failed to fetch characters.');
     }
   }
 }

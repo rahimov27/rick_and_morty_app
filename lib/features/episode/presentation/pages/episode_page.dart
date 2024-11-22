@@ -62,35 +62,32 @@ class EpisodePage extends StatelessWidget {
           padding: const EdgeInsets.only(left: 16, right: 16, top: 26),
           child: TabBarView(
             children: <Widget>[
-              Center(
-                child: BlocBuilder<EpisodeCubit, EpisodeState>(
-                  builder: (context, state) {
-                    if (state is EpisodeLoading) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (state is EpisodeLoaded) {
-                      return Column(
-                        children: [
-                          Expanded(
-                            child: ListView.builder(
-                              itemCount: state.episode.length,
-                              itemBuilder: (context, index) {
-                                return EpisodeRowWidget(
-                                  title: state.episode[index].name,
-                                  episode: state.episode[index].episode,
-                                  date: state.episode[index].airDate,
-                                );
-                              },
-                            ),
+              Column(
+                children: [
+                  BlocBuilder<EpisodeCubit, EpisodeState>(
+                    builder: (context, state) {
+                      if (state is EpisodeLoading) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (state is EpisodeLoaded) {
+                        return Expanded(
+                          child: ListView.builder(
+                            itemCount: state.episodes.length,
+                            itemBuilder: (context, index) {
+                              return EpisodeRowWidget(
+                                title: state.episodes[index].name,
+                                episode: state.episodes[index].episode,
+                                date: state.episodes[index].airDate,
+                              );
+                            },
                           ),
-                          const SizedBox(height: 24),
-                        ],
-                      );
-                    } else if (state is EpisodeError) {
-                      return Text(state.error);
-                    }
-                    return const SizedBox.shrink();
-                  },
-                ),
+                        );
+                      } else if (state is EpisodeError) {
+                        return Text(state.error);
+                      }
+                      return const SizedBox.shrink();
+                    },
+                  ),
+                ],
               ),
               const Center(
                   child: Text("Сезон 2",

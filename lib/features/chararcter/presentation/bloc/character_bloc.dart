@@ -1,25 +1,29 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:rick_and_morty_app/features/chararcter/data/models/character_model.dart';
-import 'package:rick_and_morty_app/features/chararcter/domain/repositories/character_repository.dart';
+import 'package:rick_and_morty_app/features/chararcter/domain/entities/character_entity.dart';
+import 'package:rick_and_morty_app/features/chararcter/domain/usecases/get_character_usecase.dart';
 
 part 'character_event.dart';
 part 'character_state.dart';
 
-// lib/features/character/presentation/bloc/character_bloc.dart
-
 class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
-  final CharacterRepository repository;
+  final GetCharactersUseCase getCharactersUseCase;
 
-  CharacterBloc({required this.repository}) : super(CharacterInitial()) {
-    on<GetCharacterEvent>((event, emit) async {
+  CharacterBloc(this.getCharactersUseCase) : super(CharacterInitial()) {
+    on<LoadCharactersEvent>((event, emit) async {
       emit(CharacterLoading());
-      try {
-        final characters = await repository.getCharacter();
-        emit(CharacterSuccess(characters: characters));
-      } catch (e) {
-        emit(CharacterError(error: "Error: $e"));
-      }
+      final result = await getCharactersUseCase();
+
+      result.fold(
+        (failure) {
+          // Убедитесь, что failure.message существует
+          emit(CharacterError(message: failure.message));
+        },
+        (characters) {
+          // Проверяем, что characters соответствует List<CharacterEntity>
+          emit(CharacterLoaded(characters: characters));
+        },
+      );
     });
   }
 }

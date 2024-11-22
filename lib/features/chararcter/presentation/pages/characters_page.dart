@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'package:rick_and_morty_app/features/chararcter/presentation/bloc/character_bloc.dart';
 import 'package:rick_and_morty_app/features/chararcter/presentation/pages/character_details_page.dart';
 import 'package:rick_and_morty_app/features/chararcter/presentation/widgets/text_field_character_widget.dart';
+import 'package:rick_and_morty_app/features/chararcter/providers/character_count_provider.dart';
 import 'package:rick_and_morty_app/shared/theme/app_colors.dart';
 import 'package:rick_and_morty_app/features/chararcter/presentation/widgets/grid_view_widget.dart';
 import 'package:rick_and_morty_app/features/chararcter/presentation/widgets/list_view_widget.dart';
@@ -22,7 +24,12 @@ class _CharactersPageState extends State<CharactersPage> {
 
   @override
   void initState() {
-    BlocProvider.of<CharacterBloc>(context).add(GetCharacterEvent());
+    BlocProvider.of<CharacterBloc>(context).add(LoadCharactersEvent());
+
+    final provider =
+        Provider.of<CharacterCountProvider>(context, listen: false);
+    provider.getCountCharacter();
+
     super.initState();
   }
 
@@ -48,9 +55,11 @@ class _CharactersPageState extends State<CharactersPage> {
                   children: [
                     BlocBuilder<CharacterBloc, CharacterState>(
                       builder: (context, state) {
-                        if (state is CharacterSuccess) {
+                        if (state is CharacterLoaded) {
+                          final counts =
+                              context.watch<CharacterCountProvider>().countData;
                           return Text(
-                            "Всего персонажей: ${state.characters.length}",
+                            "Всего персонажей: $counts",
                             style: const TextStyle(color: AppColors.grey),
                           );
                         }
@@ -73,7 +82,7 @@ class _CharactersPageState extends State<CharactersPage> {
                 ),
                 BlocBuilder<CharacterBloc, CharacterState>(
                   builder: (context, state) {
-                    if (state is CharacterSuccess) {
+                    if (state is CharacterLoaded) {
                       return Expanded(
                         child: isGrid
                             ? GridView.builder(
@@ -91,12 +100,13 @@ class _CharactersPageState extends State<CharactersPage> {
                                     MaterialPageRoute(
                                       builder: (context) =>
                                           CharacterDetailsPage(
-                                        characterModel: state.characters[index],
+                                        characterEntity:
+                                            state.characters[index],
                                       ),
                                     ),
                                   ),
                                   child: GridViewWidget(
-                                    characters: state.characters[index],
+                                    characterEntity: state.characters[index],
                                   ),
                                 ),
                               )
@@ -110,13 +120,13 @@ class _CharactersPageState extends State<CharactersPage> {
                                       MaterialPageRoute(
                                         builder: (context) =>
                                             CharacterDetailsPage(
-                                          characterModel:
+                                          characterEntity:
                                               state.characters[index],
                                         ),
                                       ),
                                     );
                                   },
-                                  characters: state.characters[index],
+                                  characterEntity: state.characters[index],
                                 ),
                               ),
                       );
@@ -141,9 +151,7 @@ class _CharactersPageState extends State<CharactersPage> {
                         ),
                       );
                     } else if (state is CharacterLoading) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
+                      return const AppCircularWidget();
                     }
 
                     return const Center(
@@ -156,6 +164,23 @@ class _CharactersPageState extends State<CharactersPage> {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class AppCircularWidget extends StatelessWidget {
+  const AppCircularWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const Expanded(
+      child: Center(
+        child: CircularProgressIndicator(
+          color: AppColors.episodeColor,
         ),
       ),
     );

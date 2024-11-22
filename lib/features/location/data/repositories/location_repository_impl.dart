@@ -1,6 +1,8 @@
-import 'package:rick_and_morty_app/features/location/data/models/location_model.dart';
+import 'package:dartz/dartz.dart';
+import 'package:rick_and_morty_app/features/location/data/datasources/location_remote_datasource.dart';
+import 'package:rick_and_morty_app/features/location/domain/entities/location_entity.dart';
 import 'package:rick_and_morty_app/features/location/domain/repositories/location_repository.dart';
-import 'package:rick_and_morty_app/features/location/data/datasources/location_remote_data_source.dart';
+import 'package:rick_and_morty_app/shared/core/error/failure.dart';
 
 class LocationRepositoryImpl implements LocationRepository {
   final LocationRemoteDataSource remoteDataSource;
@@ -8,11 +10,16 @@ class LocationRepositoryImpl implements LocationRepository {
   LocationRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<List<LocationModel>> getLocation() async {
+  Future<Either<Failure, List<LocationEntity>>> getLocation() async {
     try {
-      return await remoteDataSource.getLocation();
+      final locationModels = await remoteDataSource.getLocation();
+
+      final locationEntities =
+          locationModels.map((model) => LocationEntity.fromModel(model)).toList();
+
+      return Right(locationEntities);
     } catch (e) {
-      throw Exception("Ошибка при загрузке данных о локациях");
+      return Left(Failure(message: "error getting locations $e"));
     }
   }
 }

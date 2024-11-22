@@ -1,25 +1,30 @@
-import 'package:dio/dio.dart';
-import 'package:rick_and_morty_app/features/chararcter/data/models/character_model.dart';
+import 'package:dartz/dartz.dart';  // Import dartz for Either
+import 'package:rick_and_morty_app/features/chararcter/domain/entities/character_entity.dart';
+import 'package:rick_and_morty_app/features/chararcter/data/datasources/character_remote_datasource.dart';
 import 'package:rick_and_morty_app/features/chararcter/domain/repositories/character_repository.dart';
+import 'package:rick_and_morty_app/shared/core/error/failure.dart';
 
 class CharacterRepositoryImpl implements CharacterRepository {
-  final Dio dio;
+  final CharacterRemoteDatasourceImpl remoteDataSource;
 
-  CharacterRepositoryImpl({required this.dio});
+  CharacterRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<List<CharacterModel>> getCharacter() async {
+  Future<Either<Failure, List<CharacterEntity>>> getCharacters() async {
     try {
-      final response =
-          await dio.get("https://rickandmortyapi.com/api/character");
-      final List characterJson = response.data['results'];
-      print(characterJson);
+      // Fetching the characters from the remote data source
+      final characterModels = await remoteDataSource.getCharacters();
 
-      return characterJson
-          .map((json) => CharacterModel.fromJson(json))
+      // Convert the CharacterModels to CharacterEntities
+      final characterEntities = characterModels
+          .map((model) => CharacterEntity.fromModel(model))
           .toList();
+
+      // Return a Right result (success)
+      return Right(characterEntities);
     } catch (e) {
-      throw Exception("Failed to load get character data");
+      // If an error occurs, return a Left result (failure)
+      return Left(Failure(message: 'Error getting characters: $e'));
     }
   }
 }

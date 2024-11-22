@@ -11,12 +11,18 @@ final class LocationInitial extends LocationState {}
 
 class LocationLoading extends LocationState {}
 
-class LocationSuccess extends LocationState {
-  final List<LocationModel> location;
-  const LocationSuccess({required this.location});
+class LocationLoaded extends LocationState {
+  final List<LocationEntity> locations;
+  const LocationLoaded({required this.locations});
+
+  @override
+  List<Object> get props => [locations];
 }
 
 class LocationError extends LocationState {
   final String error;
   const LocationError({required this.error});
+
+  @override
+  List<Object> get props => [error];
 }

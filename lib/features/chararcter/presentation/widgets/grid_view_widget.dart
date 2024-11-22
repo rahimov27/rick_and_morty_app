@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:rick_and_morty_app/features/chararcter/data/models/character_model.dart';
+import 'package:rick_and_morty_app/features/chararcter/domain/entities/character_entity.dart';
 import 'package:rick_and_morty_app/shared/theme/app_colors.dart';
 
 class GridViewWidget extends StatelessWidget {
   const GridViewWidget({
     super.key,
-    required this.characters,
+    required this.characterEntity,
   });
 
-  final CharacterModel characters;
+  final CharacterEntity characterEntity;
 
   @override
   Widget build(BuildContext context) {
@@ -16,23 +16,22 @@ class GridViewWidget extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 60,
-          backgroundImage:
-              characters.image != null && characters.image!.isNotEmpty
-                  ? NetworkImage(characters.image!)
-                  : const AssetImage('assets/images/placeholder.png')
-                      as ImageProvider,
+          backgroundImage: characterEntity.image.isNotEmpty
+              ? NetworkImage(characterEntity.image)
+              : const AssetImage('assets/images/placeholder.png')
+                  as ImageProvider,
         ),
         const SizedBox(height: 18),
         Text(
-          characters.status ?? "",
+          characterEntity.status,
           style: TextStyle(
             fontSize: 10,
             fontWeight: FontWeight.w500,
-            color: _getStatusColor(characters.status),
+            color: _getStatusColor(characterEntity.status),
           ),
         ),
         Text(
-          characters.name ?? "",
+          characterEntity.name,
           textAlign: TextAlign.center,
           style: const TextStyle(
               height: 1.2,
@@ -41,7 +40,7 @@ class GridViewWidget extends StatelessWidget {
               color: AppColors.white),
         ),
         Text(
-          '${characters.species}, ${characters.gender}',
+          '${characterEntity.species}, ${characterEntity.gender}',
           style: const TextStyle(
               fontSize: 12, fontWeight: FontWeight.w400, color: AppColors.grey),
         ),

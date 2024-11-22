@@ -15,59 +15,62 @@ class LocationWidget extends StatelessWidget {
       "https://platform.vox.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/24415978/rick_and_morty_s4_image.png?quality=90&strip=all&crop=7.8125,0,84.375,100"
     ]; // Adjust this line accordingly
 
-    return Container(
-      height: 218,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: AppColors.blueGreen,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-            ),
-            child: SizedBox(
-              height: 150,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: residentsImages.length,
-                itemBuilder: (context, index) => Image.network(
-                  residentsImages[index],
-                  height: 150,
-                  width: 300,
-                  fit: BoxFit.fill,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: Container(
+        height: 218,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: AppColors.blueGreen,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+              child: SizedBox(
+                height: 150,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: residentsImages.length,
+                  itemBuilder: (context, index) => Image.network(
+                    residentsImages[index],
+                    height: 150,
+                    width: 300,
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 12, left: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  location.name, // Access properties of LocationEntity
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.white,
+            Padding(
+              padding: const EdgeInsets.only(top: 12, left: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    location.name, // Access properties of LocationEntity
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.white,
+                    ),
                   ),
-                ),
-                Text(
-                  location.dimension, // Handle null dimensions
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.grey,
+                  Text(
+                    location.dimension, // Handle null dimensions
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.grey,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

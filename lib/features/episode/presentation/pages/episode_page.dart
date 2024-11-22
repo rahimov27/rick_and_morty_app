@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rick_and_morty_app/features/chararcter/presentation/pages/characters_page.dart';
 import 'package:rick_and_morty_app/features/episode/presentation/cubit/episode_cubit.dart';
 import 'package:rick_and_morty_app/features/episode/presentation/widgets/episode_row_widget.dart';
 import 'package:rick_and_morty_app/shared/theme/app_colors.dart';
@@ -63,35 +62,32 @@ class EpisodePage extends StatelessWidget {
           padding: const EdgeInsets.only(left: 16, right: 16, top: 26),
           child: TabBarView(
             children: <Widget>[
-              Center(
-                child: BlocBuilder<EpisodeCubit, EpisodeState>(
-                  builder: (context, state) {
-                    if (state is EpisodeLoading) {
-                      return const Center(child: AppCircularWidget());
-                    } else if (state is EpisodeLoaded) {
-                      return Column(
-                        children: [
-                          Expanded(
-                            child: ListView.builder(
-                              itemCount: state.episode.length,
-                              itemBuilder: (context, index) {
-                                return EpisodeRowWidget(
-                                  title: state.episode[index].name,
-                                  episode: state.episode[index].episode,
-                                  date: state.episode[index].airDate,
-                                );
-                              },
-                            ),
+              Column(
+                children: [
+                  BlocBuilder<EpisodeCubit, EpisodeState>(
+                    builder: (context, state) {
+                      if (state is EpisodeLoading) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (state is EpisodeLoaded) {
+                        return Expanded(
+                          child: ListView.builder(
+                            itemCount: state.episode.length,
+                            itemBuilder: (context, index) {
+                              return EpisodeRowWidget(
+                                title: state.episode[index].name,
+                                episode: state.episode[index].episode,
+                                date: state.episode[index].airDate,
+                              );
+                            },
                           ),
-                          const SizedBox(height: 24),
-                        ],
-                      );
-                    } else if (state is EpisodeError) {
-                      return Text(state.error);
-                    }
-                    return const SizedBox.shrink();
-                  },
-                ),
+                        );
+                      } else if (state is EpisodeError) {
+                        return Text(state.error);
+                      }
+                      return const SizedBox.shrink();
+                    },
+                  ),
+                ],
               ),
               const Center(
                   child: Text("Сезон 2",

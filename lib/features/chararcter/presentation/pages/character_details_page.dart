@@ -209,14 +209,14 @@ class _CharacterDetailsPageState extends State<CharacterDetailsPage> {
                                   return const Center(
                                       child: CircularProgressIndicator());
                                 } else if (state is EpisodeLoaded) {
-                                  final episodeData = state.episode;
+                                  final episodeData = state.episodes;
                                   return ListView.builder(
                                     itemCount: episodeData.length,
                                     itemBuilder: (context, index) {
                                       return EpisodeRowWidget(
-                                        title: state.episode[index].name,
-                                        episode: state.episode[index].episode,
-                                        date: state.episode[index].airDate,
+                                        title: state.episodes[index].name,
+                                        episode: state.episodes[index].episode,
+                                        date: state.episodes[index].airDate,
                                       );
                                     },
                                   );

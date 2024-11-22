@@ -7,7 +7,7 @@ import 'package:rick_and_morty_app/features/chararcter/domain/usecases/get_chara
 import 'package:rick_and_morty_app/features/chararcter/presentation/bloc/character_bloc.dart';
 import 'package:rick_and_morty_app/features/chararcter/providers/character_count_provider.dart';
 import 'package:rick_and_morty_app/features/episode/data/datasources/episode_remote_data_source.dart';
-import 'package:rick_and_morty_app/features/episode/data/repositories/episode_repositories.dart';
+import 'package:rick_and_morty_app/features/episode/data/repositories/episode_repository_impl.dart';
 import 'package:rick_and_morty_app/features/episode/presentation/cubit/episode_cubit.dart';
 import 'package:rick_and_morty_app/features/location/data/datasources/location_remote_datasource.dart';
 import 'package:rick_and_morty_app/features/location/data/repositories/location_repository_impl.dart';

@@ -12,8 +12,8 @@ class EpisodeInitial extends EpisodeState {}
 class EpisodeLoading extends EpisodeState {}
 
 class EpisodeLoaded extends EpisodeState {
-  final List<EpisodeModel> episode;
-  const EpisodeLoaded(this.episode);
+  final List<EpisodeEntity> episodes;
+  const EpisodeLoaded(this.episodes);
 }
 
 class EpisodeError extends EpisodeState {

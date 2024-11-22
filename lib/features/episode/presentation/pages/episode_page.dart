@@ -71,12 +71,12 @@ class EpisodePage extends StatelessWidget {
                       } else if (state is EpisodeLoaded) {
                         return Expanded(
                           child: ListView.builder(
-                            itemCount: state.episode.length,
+                            itemCount: state.episodes.length,
                             itemBuilder: (context, index) {
                               return EpisodeRowWidget(
-                                title: state.episode[index].name,
-                                episode: state.episode[index].episode,
-                                date: state.episode[index].airDate,
+                                title: state.episodes[index].name,
+                                episode: state.episodes[index].episode,
+                                date: state.episodes[index].airDate,
                               );
                             },
                           ),

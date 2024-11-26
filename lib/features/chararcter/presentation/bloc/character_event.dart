@@ -6,3 +6,13 @@ abstract class CharacterEvent extends Equatable {
 }
 
 class LoadCharactersEvent extends CharacterEvent {}
+
+
+class SearchCharacterByNameEvent extends CharacterEvent {
+  final String name;
+
+  SearchCharacterByNameEvent({required this.name});
+
+  @override
+  List<Object?> get props => [name];
+}

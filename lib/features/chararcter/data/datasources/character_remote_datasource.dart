@@ -3,6 +3,7 @@ import 'package:rick_and_morty_app/features/chararcter/data/models/character_mod
 
 abstract class CharacterRemoteDatasource {
   Future<List<CharacterModel>> getCharacters();
+  Future<List<CharacterModel>> searchCharactersByName(String name);
 }
 
 class CharacterRemoteDatasourceImpl implements CharacterRemoteDatasource {
@@ -19,6 +20,18 @@ class CharacterRemoteDatasourceImpl implements CharacterRemoteDatasource {
           .toList();
     } else {
       throw Exception('Failed to fetch characters.');
+    }
+  }
+  
+  @override
+  Future<List<CharacterModel>> searchCharactersByName(String name) async {
+    final response = await dio.get("https://rickandmortyapi.com/api/character", queryParameters: {"name": name});
+    if (response.statusCode == 200) {
+      return (response.data['results'] as List)
+          .map((e) => CharacterModel.fromJson(e))
+          .toList();
+    } else {
+      throw Exception('Character not found.');
     }
   }
 }

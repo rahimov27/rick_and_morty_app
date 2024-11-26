@@ -17,8 +17,14 @@ class TextFieldCharacterWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       onChanged: (value) {
+        // Если значение не пустое, вызываем событие поиска
         if (value.isNotEmpty) {
-          BlocProvider.of<CharacterBloc>(context).add(LoadCharactersEvent());
+          BlocProvider.of<CharacterBloc>(context).add(
+            SearchCharacterByNameEvent(name: value), // Добавлено событие поиска
+          );
+        } else {
+          BlocProvider.of<CharacterBloc>(context).add(
+              LoadCharactersEvent()); // Если строка пустая, загружаем всех персонажей
         }
       },
       controller: controller,

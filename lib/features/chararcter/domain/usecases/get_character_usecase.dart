@@ -13,3 +13,14 @@ class GetCharactersUseCase {
     return await repository.getCharacters();
   }
 }
+
+class SearchCharactersByNameUseCase {
+  final CharacterRepository repository;
+
+  SearchCharactersByNameUseCase({required this.repository});
+
+  Future<Either<Failure, List<CharacterEntity>>> call(String name) async {
+    return await repository.searchCharactersByName(name);
+  }
+}
+

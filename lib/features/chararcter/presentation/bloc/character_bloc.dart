@@ -8,22 +8,33 @@ part 'character_state.dart';
 
 class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
   final GetCharactersUseCase getCharactersUseCase;
+  final SearchCharactersByNameUseCase searchCharactersByNameUseCase;
 
-  CharacterBloc(this.getCharactersUseCase) : super(CharacterInitial()) {
-    on<LoadCharactersEvent>((event, emit) async {
-      emit(CharacterLoading());
-      final result = await getCharactersUseCase();
+  CharacterBloc({
+    required this.getCharactersUseCase,
+    required this.searchCharactersByNameUseCase,
+  }) : super(CharacterInitial()) {
+    on<LoadCharactersEvent>(_onLoadCharacters);
+    on<SearchCharacterByNameEvent>(_onSearchCharacterByName);
+  }
 
-      result.fold(
-        (failure) {
-          // Убедитесь, что failure.message существует
-          emit(CharacterError(message: failure.message));
-        },
-        (characters) {
-          // Проверяем, что characters соответствует List<CharacterEntity>
-          emit(CharacterLoaded(characters: characters));
-        },
-      );
-    });
+  Future<void> _onLoadCharacters(
+      LoadCharactersEvent event, Emitter<CharacterState> emit) async {
+    emit(CharacterLoading());
+    final result = await getCharactersUseCase();
+    result.fold(
+      (failure) => emit(CharacterError(message: failure.message)),
+      (characters) => emit(CharacterLoaded(characters: characters)),
+    );
+  }
+
+  Future<void> _onSearchCharacterByName(
+      SearchCharacterByNameEvent event, Emitter<CharacterState> emit) async {
+    emit(CharacterLoading());
+    final result = await searchCharactersByNameUseCase(event.name);
+    result.fold(
+      (failure) => emit(CharacterError(message: failure.message)),
+      (characters) => emit(CharacterLoaded(characters: characters)),
+    );
   }
 }

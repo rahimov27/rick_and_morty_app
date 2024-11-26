@@ -4,4 +4,5 @@ import 'package:rick_and_morty_app/shared/core/error/failure.dart';
 
 abstract class CharacterRepository {
   Future<Either<Failure, List<CharacterEntity>>> getCharacters();
+  Future<Either<Failure, List<CharacterEntity>>> searchCharactersByName(String name);
 }

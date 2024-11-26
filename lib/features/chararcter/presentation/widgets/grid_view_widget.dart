@@ -16,6 +16,7 @@ class GridViewWidget extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 60,
+          backgroundColor: AppColors.episodeColor,
           backgroundImage: characterEntity.image.isNotEmpty
               ? NetworkImage(characterEntity.image)
               : const AssetImage('assets/images/placeholder.png')

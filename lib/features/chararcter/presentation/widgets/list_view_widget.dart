@@ -21,6 +21,7 @@ class ListViewWidget extends StatelessWidget {
         child: Row(
           children: [
             CircleAvatar(
+              backgroundColor: AppColors.episodeColor,
               radius: 37,
               backgroundImage: characterEntity.image.isNotEmpty
                   ? NetworkImage(characterEntity.image)
